@@ -3,13 +3,19 @@ import requests
 from datetime import datetime
 from miflora.miflora_poller import MiFloraPoller, \
     MI_CONDUCTIVITY, MI_MOISTURE, MI_LIGHT, MI_TEMPERATURE, MI_BATTERY
+### PARAMETRES A EDITER
+# idx du sensor virtuel pour la temperature et l'humidite
+idx = 300
+# idx du sensor virtuel pour l'engrais
+idx2 = 301
+# Adresse MAC du Mi Flower
+poller = MiFloraPoller("C4:7C:8D:60:C1:2B")
+### FIN DES PARAMETRES A EDITER
 
 maintenant = datetime.now()
 date = "{0}/{1}/{2} - {3}:{4}".format(maintenant.day, maintenant.month, maintenant.year, maintenant.hour, maintenant.minute)
 
-idx = 300
-idx2 = 301
-poller = MiFloraPoller("C4:7C:8D:60:C1:2B")
+
 
 
 temp = poller.parameter_value("temperature")
