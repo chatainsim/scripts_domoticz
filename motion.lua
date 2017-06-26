@@ -48,6 +48,8 @@ commandArray = {}
     end
     -- If the bulb is 'On' OR the bulb is set to a certain level AND the motion sensor is 'Off' AND difference between current time and last update on motion sensor THEN turn of the light
     -- Change bulb and motion sensor name's
+    -- Keep in mine that the bulb will be turn off after the time motion sensor turn off + the time you define with difference > 60
+    -- For exemple my motion sensor turn off after 120 seconds, so add the 60 and the bulb will turn off after 120+60 = 180seconds
     if ((otherdevices['YeelightWhite'] == 'On' or otherdevices['YeelightWhite'] == 'Set Level') and otherdevices['Xiaomi Motion Sensor Entree'] == 'Off' and difference > 30) then
         if (debug) then
             print('Turning YeelightWhite Off after '..difference..'.')
