@@ -1,4 +1,5 @@
 -- Source: https://www.domoticz.com/wiki/Event_script_examples#Send_a_warning_when_the_garage_door_has_been_open_for_more_than_10_minutes
+-- Website: https://domo.easter.fr/2017/07/28/portes-ouvertes-notification-et-domoticz/
 t1 = os.time()
 s = otherdevices_lastupdate['Xiaomi Door Sensor']
 frigo = otherdevices_lastupdate['Xiaomi Door Frigo']
