@@ -1,3 +1,4 @@
+-- Website: https://domo.easter.fr/2017/06/26/kodi-lumieres-tv-et-domoticz/
 commandArray = {}
     if (devicechanged['Kodi'] == 'Video') then
         commandArray['Spot RF']='Off'
