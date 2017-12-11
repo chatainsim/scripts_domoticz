@@ -1,4 +1,8 @@
 #!/bin/bash
+###############################
+# Obsolete nouvelle version : https://github.com/chatainsim/scripts_domoticz/blob/master/vigicrue2.lua
+###############################
+exit 0
 ### PARAMETRES A MODIFIER
 #Domoticz
 SERVER="192.168.1.254:3434"
