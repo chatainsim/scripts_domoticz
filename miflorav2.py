@@ -12,8 +12,11 @@ from miflora.backends.bluepy import BluepyBackend
 from miflora import miflora_scanner
 
 backend = GatttoolBackend
+#Miflora Mac address
 mac = 'C4:7C:8D:60:C1:2B'
+#Domoticz IDX for Temp/Hum
 idx = 300
+#Domoticz IDX for Fertilizer
 idx2 = 301
 poller = MiFloraPoller(mac, backend)
 
