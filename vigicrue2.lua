@@ -1,17 +1,22 @@
+-- Parameters to change according to you needs
 debug=false
+-- Station ID, from one to many
 Station = {'W141001001', 'L800001020'}
+-- IDX of sensor for height value | STATION_ID='IDX_SENSOR'
 SIDXHeight = {W141001001='215', L800001020='218'}
+-- IDX of sensor for speed value | STATION_ID='IDX_SENSOR'
 SIDXSpeed = {W141001001='216', L800001020='217'}
-
+-- End of parameters
 
 json = (loadfile "/opt/domoticz/scripts/lua/JSON.lua")()
 time = os.date("*t")
-
+-- Function to update sensor
 local function update(idx, value1)
     local cmd = idx..'|0|'..value1
     print(cmd)
     table.insert (commandArray, { ['UpdateDevice'] = cmd } )
 end
+-- function to get data from url
 local function getdata(urlh,urls)
     local DataHeight = assert(io.popen('/usr/bin/curl "'..urlh..'"'))
     local BlocJsonHeight = DataHeight:read('*all')
