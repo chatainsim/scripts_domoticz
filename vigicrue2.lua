@@ -33,7 +33,7 @@ local function getdata(urlh,urls)
     return Height, Speed
 end
 commandArray = {}
-if ((time.min == 0 or time.min == 30) and time.sec == 0) then
+if (time.min == 0 or time.min == 30) then
     for k,v in pairs(Station) do
         local IDStation = v
         local IDXHeight = SIDXHeight[v]
