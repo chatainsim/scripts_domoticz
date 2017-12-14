@@ -42,14 +42,20 @@ if (time.min == 0 or time.min == 30) then
         local urlHeight = 'https://www.vigicrues.gouv.fr/services/observations.json/index.php?CdStationHydro='..IDStation..'&GrdSerie=H&FormatSortie=simple'
         local urlSpeed = 'https://www.vigicrues.gouv.fr/services/observations.json/index.php?CdStationHydro='..IDStation..'&GrdSerie=Q&FormatSortie=simple'
         ResultHeight,ResultSpeed=getdata(urlHeight,urlSpeed)
-    
-        update(IDXHeight, ResultHeight[#ResultHeight][2])
-        update(IDXSpeed, ResultSpeed[#ResultSpeed][2])
-        if (debug) then
-            print("ResultHeight: "..ResultHeight[#ResultHeight][2])
-            print("ResultSpeed: "..ResultSpeed[#ResultSpeed][2])
+ 
+        if (#ResultHeight ~= 0) then
+                if (debug) then print("ResultHeight: "..ResultHeight[#ResultHeight][2]) end
+                update(IDXHeight, ResultHeight[#ResultHeight][2])
+        else
+                if (debug) then print('Height level is empty.') end
         end
-        --print(v)
+        if (#ResultSpeed ~= 0) then
+                if (debug) then print("ResultSpeed: "..ResultSpeed[#ResultSpeed][2]) end
+                update(IDXSpeed, ResultSpeed[#ResultSpeed][2])
+        else
+                if (debug) then print('Speed is empty.') end
+        end
+
     end
 end
 
