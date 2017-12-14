@@ -14,7 +14,7 @@ time = os.date("*t")
 -- Function to update sensor
 local function update(idx, value1)
     local cmd = idx..'|0|'..value1
-    print(cmd)
+    --print(cmd)
     table.insert (commandArray, { ['UpdateDevice'] = cmd } )
 end
 -- function to get data from url
