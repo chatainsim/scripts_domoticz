@@ -38,7 +38,7 @@ commandArray = {}
             end
         end
     end
-    if ((otherdevices[light_bulb] == 'On' or otherdevices[light_bulb] == 'Set Level') and otherdevices[motion_sensor] == 'Off' and difference > 30) then
+    if (otherdevices[light_bulb] ~= 'Off' and otherdevices[motion_sensor] == 'Off' and difference > 30) then
         if (debug) then print('Turning ' .. light_bulb .. ' Off after '..difference..'.') end
         commandArray[light_bulb]='Off'
     end
