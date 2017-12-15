@@ -37,7 +37,7 @@ commandArray = {}
                 if (debug) then print('its nighttime') end
                 commandArray[1]={[light_bulb]='On'}
                 commandArray[2]={[light_bulb]='Set Level 1'}
-            elseif (time.hour > morning and time.hour < nolight or time.hour < night and time.hour > nolight ) then
+            elseif (time.hour > morning and time.hour < nolight or time.hour < night and time.hour > morning ) then
                 if (debug) then print('its daytime') end
                 commandArray[1]={[light_bulb]='On'}
                 commandArray[2]={[light_bulb]='Set Level 40'}
