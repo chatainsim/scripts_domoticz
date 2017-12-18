@@ -8,6 +8,8 @@ SIDXHeight = {W141001001='215', L800001020='218'}
 SIDXSpeed = {W141001001='216', L800001020='217'}
 -- JSON.lua path
 json = (loadfile "/opt/domoticz/scripts/lua/JSON.lua")()
+-- Curl path
+curl = '/usr/bin/curl'
 -- End of parameters
 
 time = os.date("*t")
@@ -19,13 +21,13 @@ local function update(idx, value1)
 end
 -- function to get data from url
 local function getdata(urlh,urls)
-    local DataHeight = assert(io.popen('/usr/bin/curl "'..urlh..'"'))
+    local DataHeight = assert(io.popen(curl..' -s "'..urlh..'"'))
     local BlocJsonHeight = DataHeight:read('*all')
     DataHeight:close()
     local JsonHeight = json:decode(BlocJsonHeight)
     local Height = JsonHeight.Serie.ObssHydro
     
-    local DataSpeed = assert(io.popen('/usr/bin/curl "'..urls..'"'))
+    local DataSpeed = assert(io.popen(curl..' -s "'..urls..'"'))
     local BlocJsonSpeed = DataSpeed:read('*all')
     DataSpeed:close()
     local JsonSpeed = json:decode(BlocJsonSpeed)
