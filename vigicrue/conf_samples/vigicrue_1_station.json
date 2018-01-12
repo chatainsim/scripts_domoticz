@@ -1,0 +1,29 @@
+{
+  "station": [
+    "L800001020"
+  ],
+  "idx": {
+    "height": {
+      "L800001020": "218"
+    },
+    "speed": {
+      "L800001020": "217"
+    }
+  },
+  "notifications": {
+    "height": {
+      "L800001020": {
+        "test": "gt",
+        "value": "1",
+        "active": "true"
+      }
+    },
+    "speed": {
+      "L800001020": {
+        "test": "ge",
+        "value": "140",
+        "active": "true"
+      }
+    }
+  }
+}
