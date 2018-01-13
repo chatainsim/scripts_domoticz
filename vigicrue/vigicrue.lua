@@ -34,14 +34,13 @@ local function getdata(urlh,urls)
     return Height, Speed, Name
 end
 commandArray = {}
-if (time.min == 7 or time.min == 30) then
+if (time.min == 0 or time.min == 30) then
     local file = assert(io.open(config, "r"))
     local json_text = file:read("*all")
     file:close()
     local Conf = json:decode(json_text)
     Station = Conf.station
     for k,v in pairs(Station) do
-        print("V is: "..v)
         local IDStation = v
         local IDXHeight = Conf.idx.height[v]
         local IDXSpeed = Conf.idx.speed[v]
@@ -52,8 +51,6 @@ if (time.min == 7 or time.min == 30) then
         local urlHeight = 'https://www.vigicrues.gouv.fr/services/observations.json/index.php?CdStationHydro='..IDStation..'&GrdSerie=H&FormatSortie=simple'
         local urlSpeed = 'https://www.vigicrues.gouv.fr/services/observations.json/index.php?CdStationHydro='..IDStation..'&GrdSerie=Q&FormatSortie=simple'
         ResultHeight,ResultSpeed,StationName=getdata(urlHeight,urlSpeed)
-        print("IDX Height: "..IDXHeight)
-        print("IDX Speed: "..IDXSpeed)
         if (#ResultHeight ~= 0) then
                 if (debug) then print("ResultHeight: "..ResultHeight[#ResultHeight][2]) end
                 update(IDXHeight, ResultHeight[#ResultHeight][2])
