@@ -54,7 +54,7 @@ if (time.min == 0 or time.min == 30) then
         if (#ResultHeight ~= 0) then
                 if (debug) then print("ResultHeight: "..ResultHeight[#ResultHeight][2]) end
                 update(IDXHeight, ResultHeight[#ResultHeight][2])
-                if (NotifHeightA) then
+                if (NotifHeightA == "true") then
                     if (tostring(ResultHeight[#ResultHeight][2]) > NotifHeightV) then
                         commandArray[n]={['SendNotification']='Water level is high for station '..StationName..'#Current level is '..ResultHeight[#ResultHeight][2]..'m for '..StationName..'#0#sound#extradata#telegram'}
 			n=n+1
@@ -66,7 +66,7 @@ if (time.min == 0 or time.min == 30) then
         if (#ResultSpeed ~= 0) then
                 if (debug) then print("ResultSpeed: "..ResultSpeed[#ResultSpeed][2]) end
                 update(IDXSpeed, ResultSpeed[#ResultSpeed][2])
-                if (NotifSpeedA) then
+                if (NotifSpeedA = "true") then
                     if (tostring(ResultSpeed[#ResultSpeed][2]) > NotifSpeedV) then
                         commandArray[n]={['SendNotification']='Water speed level is high for station '..StationName..'#Current speed level: '..ResultSpeed[#ResultSpeed][2]..'m3/s for '..StationName..'#0#sound#extradata#telegram'}
 			n=n+1
