@@ -2,10 +2,16 @@
 debug=false
 -- Json config loadfile
 config = '/opt/domoticz/scripts/vigicrue.json'
+-- for Windows
+-- config = 'C:\\Program Files (x86)\\Domoticz\\scripts\\vigicrue.json'
 -- JSON.lua path
 json = (loadfile "/opt/domoticz/scripts/lua/JSON.lua")()
+-- for Windows
+--json = (loadfile "C:\\Program Files (x86)\\Domoticz\\scripts\\lua\\JSON.lua")()
 -- Curl path
 curl = '/usr/bin/curl'
+-- for Windows
+-- curl = 'C:\\cygwin\\bin\\curl'
 -- End of parameters
 
 time = os.date("*t")
