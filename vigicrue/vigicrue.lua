@@ -73,7 +73,7 @@ if (time.min == 0 or time.min == 30) then
                 update(IDXHeight, ResultHeight[#ResultHeight][2])
                 if (NotifHeightA == "true") then
                     if (tostring(ResultHeight[#ResultHeight][2]) > NotifHeightV) then
-			table.insert(commandArray, {['SendNotification'] = 'Water level is high for station '..StationName..'#Current level is '..ResultHeight[#ResultHeight][2]..'m for '..StationName..'#0#sound#extradata#telegram'})
+			sendnotif(StationName, ResultHeight[#ResultHeight][2], "height", NotifHeightC)
                     end
                 end
         else
@@ -84,7 +84,7 @@ if (time.min == 0 or time.min == 30) then
                 update(IDXSpeed, ResultSpeed[#ResultSpeed][2])
                 if (NotifSpeedA = "true") then
                     if (tostring(ResultSpeed[#ResultSpeed][2]) > NotifSpeedV) then
-			table.insert(commandArray, {['SendNotification'] = 'Water speed level is high for station '..StationName..'#Current speed level: '..ResultSpeed[#ResultSpeed][2]..'m3/s for '..StationName..'#0#sound#extradata#telegram'})
+			sendnotif(StationName, ResultSpeed[#ResultSpeed][2], "speed", NotifSpeedC)
                     end
                 end
         else
