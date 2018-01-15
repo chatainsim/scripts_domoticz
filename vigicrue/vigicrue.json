@@ -16,24 +16,24 @@
   "notifications": {
     "height": {
       "W141001001": {
-        "test": "ge",
+        "channel": "telegram",
         "value": "2",
         "active": "true"
       },
       "L800001020": {
-        "test": "gt",
+        "channel": "pushbullet",
         "value": "1",
         "active": "true"
       }
     },
     "speed": {
       "W141001001": {
-        "test": "ge",
+        "channel": "telegram",
         "value": "100",
         "active": "true"
       },
       "L800001020": {
-        "test": "ge",
+        "channel": "pushbullet",
         "value": "140",
         "active": "true"
       }
