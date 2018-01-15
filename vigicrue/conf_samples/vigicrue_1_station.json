@@ -13,14 +13,14 @@
   "notifications": {
     "height": {
       "L800001020": {
-        "test": "gt",
+        "channel": "telegram",
         "value": "1",
         "active": "true"
       }
     },
     "speed": {
       "L800001020": {
-        "test": "ge",
+        "channel": "telegram",
         "value": "140",
         "active": "true"
       }
