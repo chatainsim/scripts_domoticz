@@ -82,7 +82,7 @@ if (time.min == 0 or time.min == 30) then
         if (#ResultSpeed ~= 0) then
                 if (debug) then print("ResultSpeed: "..ResultSpeed[#ResultSpeed][2]) end
                 update(IDXSpeed, ResultSpeed[#ResultSpeed][2])
-                if (NotifSpeedA = "true") then
+                if (NotifSpeedA == "true") then
                     if (tostring(ResultSpeed[#ResultSpeed][2]) > NotifSpeedV) then
 			table.insert(commandArray, {['SendNotification'] = 'Water speed level is high for station '..StationName..'#Current speed level: '..ResultSpeed[#ResultSpeed][2]..'m3/s for '..StationName..'#0#sound#extradata#telegram'})
                     end
