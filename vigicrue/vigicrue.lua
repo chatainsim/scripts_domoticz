@@ -22,6 +22,17 @@ local function update(idx, value1)
     --print(cmd)
     table.insert (commandArray, { ['UpdateDevice'] = cmd } )
 end
+local function sendnotif(station, result, type, channel)
+    if (type == "height") then
+        local cmd = 'Water level is high for station '..station..'#Current level is '..result..'m for'..station..'#0#sound#extradata#'..channel
+        if (debug) then print("NotifHeight: "..cmd) end
+    elseif (type == "speed") then
+        local cmd = 'Water speed level is high for station '..station..'#Current speed level: '..result..'m3/s for '..station..'#0#sound#extradata#'..channel
+        if (debug) then print("NotifSpeed: "..cmd) end
+    end
+    table.insert (commandArray, { ['SendNotification'] = "cmd" } )
+    if (debug) then print("Notif: Sent") end
+end
 -- function to get data from url
 local function getdata(urlh,urls)
     local DataHeight = assert(io.popen(curl..' -s "'..urlh..'"'))
