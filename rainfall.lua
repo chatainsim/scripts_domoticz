@@ -9,7 +9,7 @@ return {
     execute = function(dz, trigger)
                
         local rainDevice    = dz.devices("Pluie")                                     -- Your (virtual) rain device
-        local rainSwitch   = dz.devices("VirtualRain")                                     -- Your (triggered by bucket full) switch 
+        local rainSwitch   = dz.devices("Pluviometre")                                     -- Your (triggered by bucket full) switch 
         local rainmm        = 0.2794                                                                 -- find out what 1 bucket full means in terms of mm 
         local rainTotal     = 0
         local timeSlice     = math.min( (rainDevice.lastUpdate.secondsAgo / 3600), 10) -- at least 1 bucket  in 10 hours     
