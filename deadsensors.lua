@@ -17,13 +17,6 @@ local tableDeviceToCheck = {    -- timeout for each  device, in seconde.
   ["Salle de bain"]=172800, -- 2 days
   ["Cuisine"]=172800, -- 2 days
   ["Frigo"]=172800, -- 2 days
-  ["Extérieur"]=172800, -- 2 days
-  ["Chambre 1"]=172800, -- 2 days
-  ["Chambre"]=172800, -- 2 days
-  ["Salon"]=172800, -- 2 days
-  ["Cave"]=172800, -- 2 days
-  ["Buanderie"]=172800, -- 2 days
-  ["Chaufferie"]=172800, -- 2 days
 }
 
 commandArray={}
