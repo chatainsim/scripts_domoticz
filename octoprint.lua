@@ -1,26 +1,35 @@
-OctoIP='OctoprintIP'
-OctoAPI='YourOctoprintAPIKey'
+-- For displaying debug messages
+debug=false
+-- IP address of octoprint (if you use a different port then 80 put IP:PORT
+OctoIP='OctoprintIPAddress'
+-- Octoprint API Key (found in Settings -> API)
+OctoAPI='OctoprintAPIKey'
 -- JSON.lua path
 json = (loadfile "/home/pi/domoticz/scripts/lua/JSON.lua")()
 -- Curl path
 curl = '/usr/bin/curl'
 
--- IDX of your Dummy Devices
-OctoStatusIDX='387' -- Text
-OctoBebIDX='388' -- Temperature
-OctoHeadIDX='389' -- Temperature
-OctoTotalTimeIDX='390' -- Text
-OctoCompleteIDX='391' -- Percentage
-OctoPrintTimeIDX='392' -- Text
-OctoTimeLeftIDX='393' -- Text
+-- IDX of your Dummy devices
+OctoStatusIDX='387' -- type: Text
+OctoBebIDX='388' -- type: Temperature
+OctoHeadIDX='389' -- type: Temperature
+OctoTotalTimeIDX='390' -- type: Text
+OctoCompleteIDX='391' -- type: Percentage
+OctoPrintTimeIDX='392' -- type: Text
+OctoTimeLeftIDX='393' -- type: Text
 
 OctoPrinter='http://'..OctoIP..'/api/printer'
 OctoJob='http://'..OctoIP..'/api/job'
 
 local function update(idx, value1)
     local cmd = idx..'|0|'..value1
-    --print(cmd)
     table.insert (commandArray, { ['UpdateDevice'] = cmd } )
+end
+local function online()
+    DataOctoTemp = assert(io.popen(curl..' -s --max-time 8 -H "X-Api-Key: '..OctoAPI..'" "'..OctoPrinter..'"'))
+    BlocOctoTemp = DataOctoTemp:read('*all')
+    DataOctoTemp:close()
+    JsonOctoTemp = json:decode(BlocOctoTemp)
 end
 local function round(num, n)
   local mult = 10^(n or 0)
@@ -39,30 +48,42 @@ function SecondsToClock(seconds)
   end
 end
 commandArray = {}
-  DataOctoTemp = assert(io.popen(curl..' -s --max-time 8 -H "X-Api-Key: '..OctoAPI..'" "'..OctoPrinter..'"'))
-  BlocOctoTemp = DataOctoTemp:read('*all')
-  DataOctoTemp:close()
-  JsonOctoTemp = json:decode(BlocOctoTemp)
-  OctoBeb = JsonOctoTemp.temperature.bed.actual
-  OctoHead = JsonOctoTemp.temperature.tool0.actual
-  OctoStatus = JsonOctoTemp.state.text
-  OctoState = JsonOctoTemp.state.flags.printing
-  update(OctoBebIDX, OctoBeb)
-  update(OctoHeadIDX, OctoHead)
-  update(OctoStatusIDX, OctoStatus)
-
-  if (OctoState) then
-    DataOctoTime = assert(io.popen(curl..' -s --max-time 8 -H "X-Api-Key: '..OctoAPI..'" "'..OctoJob..'"'))
-    BlocOctoTime = DataOctoTime:read('*all')
-    DataOctoTime:close()
-    JsonOctoTime = json:decode(BlocOctoTime)
-    OctoTotalTime = JsonOctoTime.job.estimatedPrintTime
-    OctoComplete = JsonOctoTime.progress.completion
-    OctoPrintTime = JsonOctoTime.progress.printTime
-    OctoTimeLeft = JsonOctoTime.progress.printTimeLeft
-    update(OctoTotalTimeIDX, SecondsToClock(OctoTotalTime))
-    update(OctoCompleteIDX, round(OctoComplete))
-    update(OctoPrintTimeIDX, SecondsToClock(OctoPrintTime))
-    update(OctoTimeLeftIDX, SecondsToClock(OctoTimeLeft))
-  end
+    local status, retval = pcall(online,10);
+    if (status) then
+      DataOctoTemp = assert(io.popen(curl..' -s --max-time 8 -H "X-Api-Key: '..OctoAPI..'" "'..OctoPrinter..'"'))
+      BlocOctoTemp = DataOctoTemp:read('*all')
+      DataOctoTemp:close()
+      JsonOctoTemp = json:decode(BlocOctoTemp)
+      OctoBeb = JsonOctoTemp.temperature.bed.actual
+      OctoHead = JsonOctoTemp.temperature.tool0.actual
+      OctoStatus = JsonOctoTemp.state.text
+      OctoState = JsonOctoTemp.state.flags.printing
+      update(OctoBebIDX, OctoBeb)
+      update(OctoHeadIDX, OctoHead)
+      update(OctoStatusIDX, OctoStatus)
+      
+      if (OctoState) then
+          DataOctoTime = assert(io.popen(curl..' -s --max-time 8 -H "X-Api-Key: '..OctoAPI..'" "'..OctoJob..'"'))
+          BlocOctoTime = DataOctoTime:read('*all')
+          DataOctoTime:close()
+          JsonOctoTime = json:decode(BlocOctoTime)
+          OctoTotalTime = JsonOctoTime.job.estimatedPrintTime
+          OctoComplete = JsonOctoTime.progress.completion
+          OctoPrintTime = JsonOctoTime.progress.printTime
+          OctoTimeLeft = JsonOctoTime.progress.printTimeLeft
+          update(OctoTotalTimeIDX, SecondsToClock(OctoTotalTime))
+          update(OctoCompleteIDX, round(OctoComplete))
+          update(OctoPrintTimeIDX, SecondsToClock(OctoPrintTime))
+          update(OctoTimeLeftIDX, SecondsToClock(OctoTimeLeft))
+      end
+    else
+      if (debug) then print("Printer not connected") end
+      update(OctoStatusIDX, "Printer not connected")
+      update(OctoBebIDX, 0)
+      update(OctoHeadIDX, 0)
+      update(OctoTotalTimeIDX, SecondsToClock(0))
+      update(OctoCompleteIDX, 0)
+      update(OctoPrintTimeIDX, SecondsToClock(0))
+      update(OctoTimeLeftIDX, SecondsToClock(0))
+    end
 return commandArray
