@@ -35,6 +35,13 @@ local function getdata(urlh,urls)
     
     return Height, Speed
 end
+local function test_error(url)
+    local DataTest = assert(io.popen(curl..' -s --max-time 8 "'..url..'"'))
+    local BlocJsonTest = DataTest:read('*all')
+    DataTest:close()
+    JsonTest = json:decode(BlocJsonTest)
+    Test = JsonTest[1].error_msg
+end
 commandArray = {}
 if (time.min == 0 or time.min == 30) then
     for k,v in pairs(Station) do
@@ -43,21 +50,26 @@ if (time.min == 0 or time.min == 30) then
         local IDXSpeed = SIDXSpeed[v]
         local urlHeight = 'https://www.vigicrues.gouv.fr/services/observations.json/index.php?CdStationHydro='..IDStation..'&GrdSerie=H&FormatSortie=simple'
         local urlSpeed = 'https://www.vigicrues.gouv.fr/services/observations.json/index.php?CdStationHydro='..IDStation..'&GrdSerie=Q&FormatSortie=simple'
-        ResultHeight,ResultSpeed=getdata(urlHeight,urlSpeed)
+        local status, retval = pcall(test_error,urlHeight);
+        if (status) then
+            print("Error, station inconnu")
+            commandArray['SendNotification']='subject#Erreur, station '..IDStation..' inconnu ou problème temporaire du site Vigicrue, merci de vérifier : '..urlHeight..'#0#sound#extradata#telegram'
+        else
+            ResultHeight,ResultSpeed=getdata(urlHeight,urlSpeed)
  
-        if (#ResultHeight ~= 0) then
+            if (#ResultHeight ~= 0) then
                 if (debug) then print("ResultHeight: "..ResultHeight[#ResultHeight][2]) end
                 update(IDXHeight, ResultHeight[#ResultHeight][2])
-        else
+            else
                 if (debug) then print('Height level is empty.') end
-        end
-        if (#ResultSpeed ~= 0) then
+            end
+            if (#ResultSpeed ~= 0) then
                 if (debug) then print("ResultSpeed: "..ResultSpeed[#ResultSpeed][2]) end
                 update(IDXSpeed, ResultSpeed[#ResultSpeed][2])
-        else
+            else
                 if (debug) then print('Speed is empty.') end
+            end
         end
-
     end
 end
 
