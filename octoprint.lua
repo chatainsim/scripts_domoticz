@@ -46,21 +46,23 @@ commandArray = {}
   OctoBeb = JsonOctoTemp.temperature.bed.actual
   OctoHead = JsonOctoTemp.temperature.tool0.actual
   OctoStatus = JsonOctoTemp.state.text
+  OctoState = JsonOctoTemp.state.flags.printing
   update(OctoBebIDX, OctoBeb)
   update(OctoHeadIDX, OctoHead)
   update(OctoStatusIDX, OctoStatus)
-  
-  DataOctoTime = assert(io.popen(curl..' -s --max-time 8 -H "X-Api-Key: '..OctoAPI..'" "'..OctoJob..'"'))
-  BlocOctoTime = DataOctoTime:read('*all')
-  DataOctoTime:close()
-  JsonOctoTime = json:decode(BlocOctoTime)
-  OctoTotalTime = JsonOctoTime.job.estimatedPrintTime
-  OctoComplete = JsonOctoTime.progress.completion
-  OctoPrintTime = JsonOctoTime.progress.printTime
-  OctoTimeLeft = JsonOctoTime.progress.printTimeLeft
-  update(OctoTotalTimeIDX, SecondsToClock(OctoTotalTime))
-  update(OctoCompleteIDX, round(OctoComplete))
-  update(OctoPrintTimeIDX, SecondsToClock(OctoPrintTime))
-  update(OctoTimeLeftIDX, SecondsToClock(OctoTimeLeft))
-  
+
+  if (OctoState) then
+    DataOctoTime = assert(io.popen(curl..' -s --max-time 8 -H "X-Api-Key: '..OctoAPI..'" "'..OctoJob..'"'))
+    BlocOctoTime = DataOctoTime:read('*all')
+    DataOctoTime:close()
+    JsonOctoTime = json:decode(BlocOctoTime)
+    OctoTotalTime = JsonOctoTime.job.estimatedPrintTime
+    OctoComplete = JsonOctoTime.progress.completion
+    OctoPrintTime = JsonOctoTime.progress.printTime
+    OctoTimeLeft = JsonOctoTime.progress.printTimeLeft
+    update(OctoTotalTimeIDX, SecondsToClock(OctoTotalTime))
+    update(OctoCompleteIDX, round(OctoComplete))
+    update(OctoPrintTimeIDX, SecondsToClock(OctoPrintTime))
+    update(OctoTimeLeftIDX, SecondsToClock(OctoTimeLeft))
+  end
 return commandArray
