@@ -1,3 +1,4 @@
+-- Use Lua -> Time
 -- For displaying debug messages
 debug=false
 -- IP address of octoprint (if you use a different port then 80 put IP:PORT
