@@ -26,6 +26,10 @@ local function update(idx, value1)
     local cmd = idx..'|0|'..value1
     table.insert (commandArray, { ['UpdateDevice'] = cmd } )
 end
+local function ping(OctoIP)
+    ping_success=os.execute('ping -c1 '..OctoIP)
+    return ping_success
+end
 local function online()
     DataOctoTemp = assert(io.popen(curl..' -s --max-time 8 -H "X-Api-Key: '..OctoAPI..'" "'..OctoPrinter..'"'))
     BlocOctoTemp = DataOctoTemp:read('*all')
@@ -50,6 +54,7 @@ function SecondsToClock(seconds)
 end
 commandArray = {}
     local status, retval = pcall(online,10);
+if(ping(OctoIP)) then
     if (status) then
       DataOctoTemp = assert(io.popen(curl..' -s --max-time 8 -H "X-Api-Key: '..OctoAPI..'" "'..OctoPrinter..'"'))
       BlocOctoTemp = DataOctoTemp:read('*all')
@@ -87,4 +92,7 @@ commandArray = {}
       update(OctoPrintTimeIDX, SecondsToClock(0))
       update(OctoTimeLeftIDX, SecondsToClock(0))
     end
+else
+    update(OctoStatusIDX, "Octoprint offline.")
+end
 return commandArray
