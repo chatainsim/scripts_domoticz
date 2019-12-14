@@ -27,7 +27,7 @@ local function update(idx, value1)
     table.insert (commandArray, { ['UpdateDevice'] = cmd } )
 end
 local function ping(OctoIP)
-    ping_success=os.execute('ping -c1 '..OctoIP)
+    ping_success=os.execute('ping -W2 -c1 '..OctoIP)
     return ping_success
 end
 local function online()
