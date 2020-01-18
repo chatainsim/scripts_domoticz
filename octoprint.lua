@@ -3,6 +3,8 @@
 debug=false
 -- IP address of octoprint (if you use a different port then 80 put IP:PORT
 OctoIP='OctoprintIPAddress'
+-- Port of Octoprint - Default 80
+OctoPort='80'
 -- Octoprint API Key (found in Settings -> API)
 OctoAPI='OctoprintAPIKey'
 -- JSON.lua path
@@ -19,8 +21,8 @@ OctoCompleteIDX='391' -- type: Percentage
 OctoPrintTimeIDX='392' -- type: Text
 OctoTimeLeftIDX='393' -- type: Text
 
-OctoPrinter='http://'..OctoIP..'/api/printer'
-OctoJob='http://'..OctoIP..'/api/job'
+OctoPrinter='http://'..OctoIP..':'..OctoPort..'/api/printer'
+OctoJob='http://'..OctoIP..':'..OctoPort..'/api/job'
 
 local function update(idx, value1)
     local cmd = idx..'|0|'..value1
