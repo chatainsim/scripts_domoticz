@@ -1,7 +1,7 @@
 -- Use Lua -> Time
 -- For displaying debug messages
 debug=false
--- IP address of octoprint (if you use a different port then 80 put IP:PORT
+-- IP address of octoprint 
 OctoIP='OctoprintIPAddress'
 -- Port of Octoprint - Default 80
 OctoPort='80'
