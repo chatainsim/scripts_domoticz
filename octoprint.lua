@@ -21,6 +21,9 @@ OctoCompleteIDX='391' -- type: Percentage
 OctoPrintTimeIDX='392' -- type: Text
 OctoTimeLeftIDX='393' -- type: Text
 
+-- If you don't have a heated bed, put this to false
+HeatedBed=true
+
 OctoPrinter='http://'..OctoIP..':'..OctoPort..'/api/printer'
 OctoJob='http://'..OctoIP..':'..OctoPort..'/api/job'
 
@@ -66,7 +69,7 @@ if(ping(OctoIP)) then
       OctoHead = JsonOctoTemp.temperature.tool0.actual
       OctoStatus = JsonOctoTemp.state.text
       OctoState = JsonOctoTemp.state.flags.printing
-      update(OctoBebIDX, OctoBeb)
+      if (HeatedBed) then update(OctoBebIDX, OctoBeb) end
       update(OctoHeadIDX, OctoHead)
       update(OctoStatusIDX, OctoStatus)
       
@@ -87,7 +90,7 @@ if(ping(OctoIP)) then
     else
       if (debug) then print("Printer not connected") end
       update(OctoStatusIDX, "Printer not connected")
-      update(OctoBebIDX, 0)
+      if (HeatedBed) then update(OctoBebIDX, 0) end
       update(OctoHeadIDX, 0)
       update(OctoTotalTimeIDX, SecondsToClock(0))
       update(OctoCompleteIDX, 0)
