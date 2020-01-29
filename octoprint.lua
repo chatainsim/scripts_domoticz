@@ -57,6 +57,9 @@ function SecondsToClock(seconds)
     return hours..":"..mins..":"..secs
   end
 end
+local function isempty(s)
+  return s == nil or s == ''
+end
 commandArray = {}
     local status, retval = pcall(online,10);
 if(ping(OctoIP)) then
@@ -82,10 +85,10 @@ if(ping(OctoIP)) then
           OctoComplete = JsonOctoTime.progress.completion
           OctoPrintTime = JsonOctoTime.progress.printTime
           OctoTimeLeft = JsonOctoTime.progress.printTimeLeft
-          update(OctoTotalTimeIDX, SecondsToClock(OctoTotalTime))
-          update(OctoCompleteIDX, round(OctoComplete))
-          update(OctoPrintTimeIDX, SecondsToClock(OctoPrintTime))
-          update(OctoTimeLeftIDX, SecondsToClock(OctoTimeLeft))
+          if isempty(OctoTotalTime) then update(OctoTotalTimeIDX, SecondsToClock(0)) else update(OctoTotalTimeIDX, SecondsToClock(OctoTotalTime)) end
+          if isempty(OctoComplete) then update(OctoCompleteIDX, round(0)) else update(OctoCompleteIDX, round(OctoComplete)) end
+          if isempty(OctoPrintTime) then update(OctoPrintTimeIDX, SecondsToClock(0)) else update(OctoPrintTimeIDX, SecondsToClock(OctoPrintTime)) end
+          if isempty(OctoTimeLeft) then update(OctoTimeLeftIDX, SecondsToClock(0)) else update(OctoTimeLeftIDX, SecondsToClock(OctoTimeLeft)) end
       end
     else
       if (debug) then print("Printer not connected") end
