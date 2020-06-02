@@ -31,13 +31,11 @@ if (server.arg(0)[0] == '1') {
   opendoor();
   urlopen();
   statedoor = 1;
-//relayState = !relayState;
 }
 if (server.arg(0)[0] == '2') {
   closedoor();
   urlclose();
   statedoor = 0;
-//relayState2 = !relayState2;
 }
 String msg = "";
 msg += "<html><body>\n";
@@ -71,13 +69,6 @@ void setup() {
   Serial.println("HTTP server started");
 }
 
-// this function will run the motors in both directions at a fixed speed
-
-void testOne() {
-delay(5000); // now turn off motors
-digitalWrite(IN1, LOW);
-digitalWrite(IN2, LOW);
-}
 void opendoor() {
   digitalWrite(ENA, HIGH);  // set speed to 200 out of possible range 0~255
   digitalWrite(IN1, HIGH);
@@ -125,7 +116,6 @@ void loop() {
         }
       }
     }
-  }
-  //testOne();   
+  }  
  lastButtonState = reading;
 }
